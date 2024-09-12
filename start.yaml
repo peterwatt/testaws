@@ -1,0 +1,19 @@
+---
+- name: Analysis
+  hosts: all
+  strategy: free
+  gather_facts: true
+  become: true
+  force_handlers: true
+
+  vars:
+    rhsm_username: pwatt@deploypartners.com
+    rhsm_password: Fred1234$
+    rhsm_org: 13088191
+    rhsm_activation_key: Redhat8
+
+  tasks:
+    - name: Generate pre-conversion analysis report
+      ansible.builtin.import_role:
+        name: infra.convert2rhel.convert
+...
