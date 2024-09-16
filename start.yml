@@ -4,10 +4,14 @@
   connection: local
   vars:
     aws_region: "{{ lookup('env', 'AWS_REGION') | default('us-east-1') }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
   tasks:
     - name: Gather AWS Account Details
       amazon.aws.aws_caller_info:
-        aws_region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        region: "{{ aws_region }}"
       register: aws_account_info
 
     - name: Display AWS Account Details
