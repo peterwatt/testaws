@@ -11,7 +11,7 @@
       amazon.aws.aws_caller_info:
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
-        region: "{{ aws_region }}"
+        region: "us-east-1"
       register: aws_account_info
 
     - name: Display AWS Account Details
