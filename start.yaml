@@ -1,19 +1,18 @@
 ---
-- name: Analysis
-  hosts: all
-  strategy: free
-  gather_facts: true
-  become: true
-  force_handlers: true
-
+- name: Get AWS Account Details
+  hosts: localhost
+  connection: local
   vars:
-    rhsm_username: pwatt@deploypartners.com
-    rhsm_password: Fred1234$
-    rhsm_org: 13088191
-    rhsm_activation_key: Redhat8
-
+    aws_region: "{{ lookup('env', 'AWS_REGION') | default('us-east-1') }}"
   tasks:
-    - name: Generate pre-conversion analysis report
-      ansible.builtin.import_role:
-        name: infra.convert2rhel.convert
-...
+    - name: Gather AWS Account Details
+      amazon.aws.aws_caller_info:
+        aws_region: "{{ aws_region }}"
+      register: aws_account_info
+
+    - name: Display AWS Account Details
+      debug:
+        msg:
+          - "AWS Account ID: {{ aws_account_info.account }}"
+          - "AWS User ID: {{ aws_account_info.user_id }}"
+          - "AWS ARN: {{ aws_account_info.arn }}"
